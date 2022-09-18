@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private val handle by lazy { Handler(Looper.myLooper()!!) }
 
     private val musicPlayer by lazy { MusicPlayer(baseContext) }
+    private val musicPlayer2 by lazy { MusicPlayer(baseContext) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +47,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setMusicData() {
-//        val musicStr = "-1 -2 -3 -4 -5 -6 -7 1 2 3 4 5 6 7 +1 +2 +3 +4 +5 +6 +7"
-        val musicStr = MusicTrackConstants.ALWAYS_YOU
-        val track = Track("track1", musicStr, beatSpeed = 108)
-
+        val track = Track("track1", MusicTrackConstants.ALWAYS_YOU, beatSpeed = 108)
         musicPlayer.startPlay(track)
+
+        val track2 = Track("track2", MusicTrackConstants.ALWAYS_YOU_ACC, beatSpeed = 108)
+        musicPlayer2.startPlay(track2)
     }
 
     private fun initData() {
