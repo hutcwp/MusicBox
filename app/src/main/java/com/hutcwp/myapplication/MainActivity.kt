@@ -4,8 +4,10 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.hutcwp.myapplication.music.TrackFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +16,9 @@ class MainActivity : AppCompatActivity() {
 
     private val musicPlayer by lazy { MusicPlayer(baseContext) }
     private val musicPlayer2 by lazy { MusicPlayer(baseContext) }
+
+
+    private val trackPlayer by lazy { TrackPlayer(musicPlayer) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +52,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setMusicData() {
-        val track = Track("track1", MusicTrackConstants.ALWAYS_YOU, beatSpeed = 108)
-        musicPlayer.startPlay(track)
+        val track = TrackFactory.build()
+            .name("track1")
+            .beatSpeed(68)
+            .addBeatList(beatStrArr2Beats(-1L, MusicTrackConstants.QING_HUA_CI))
+            .make()
 
-        val track2 = Track("track2", MusicTrackConstants.ALWAYS_YOU_ACC, beatSpeed = 108)
-        musicPlayer2.startPlay(track2)
+        Log.i("hutcwp", "setMusicData: track=$track")
+
+        trackPlayer.setBeats(track.beats)
+        trackPlayer.prepare()
+        trackPlayer.startPlay()
+
+//        val track2 = Track("track2", MusicTrackConstants.ALWAYS_YOU_ACC, beatSpeed = 108)
+//        musicPlayer2.startPlay(track2)
+
     }
+
 
     private fun initData() {
 

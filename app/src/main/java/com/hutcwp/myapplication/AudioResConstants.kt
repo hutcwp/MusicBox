@@ -1,5 +1,7 @@
 package com.hutcwp.myapplication
 
+import com.hutcwp.myapplication.music.Beat
+import com.hutcwp.myapplication.music.Sound
 import java.io.File
 
 /**
@@ -26,6 +28,26 @@ fun num2name(num: Int): String {
         .replace("5", "so")
         .replace("6", "la")
         .replace("7", "xi")
+}
+
+/**
+ * 将string转成一拍
+ */
+fun strToBeat(time: Long, str: String): Beat {
+    val sounds = str.split(" ").map {
+        Sound(-1, getAudioResFile(it.toInt()))
+    }
+    val t = time / sounds.size
+    return Beat(t, sounds)
+}
+
+/**
+ * 将整首track转成beat string集合
+ */
+fun beatStrArr2Beats(time: Long = -1, beats: List<String>): List<Beat> {
+    return beats.map {
+        strToBeat(time, it)
+    }
 }
 
 fun getAudioResFile(num: Int): AudioFile {
